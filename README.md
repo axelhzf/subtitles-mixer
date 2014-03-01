@@ -2,6 +2,7 @@
 
  CLI to join two subtitles files in one, one on top and one on the bottom.
 
+![preview](./preview.gif)
 
 ## Installation
 
