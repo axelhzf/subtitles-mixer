@@ -1,0 +1,13 @@
+{
+  "name": "subtitles-mixer",
+  "version": "0.0.1",
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "underscore.string": "~2.3.3",
+    "commander": "~2.1.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "chai": "~1.9.0"
+  }
+}
