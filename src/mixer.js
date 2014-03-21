@@ -36,24 +36,38 @@ function bufferToString (buffer) {
   return str;
 }
 
-function detectEncoding(content) {
+function detectEncoding (content) {
   var str = bufferToString(content);
   str = str.replace(/[A-Za-z0-9 :\-\->,\n]+/g, "");
   var detect = jschardet.detect(str);
   return detect.encoding;
 }
 
-function readSrt(path, cb) {
+function readSrt(options, cb) {
+  var path;
+  var encoding;
+
+  if (_.isString(options)) {
+    path = options;
+  } else {
+    path = options.path;
+    encoding = options.encoding;
+  }
+
   fs.readFile(path, function (err, content) {
     if (err) return cb(err);
 
-    var encoding = detectEncoding(content);
+    if (!encoding) {
+      encoding = detectEncoding(content);
+    }
+
     var strContent;
     if (encoding !="utf-8" && encoding!="ascii") {
       strContent = iconv.fromEncoding(content, encoding);
     } else {
       strContent = content.toString();
     }
+
     var srtData = srt.parse(strContent);
     cb(null, srtData);
   });

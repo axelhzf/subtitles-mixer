@@ -8,6 +8,6 @@
 
     npm install subtitles-mixer -g
 
-## Usage
+## Usage in command line
 
     subtitles-mixer --top sub1.srt --bottom sub2.srt --out merge.ass
