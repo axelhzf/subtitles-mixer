@@ -1,8 +1,8 @@
 {
   "name": "subtitles-mixer",
-  "version": "0.0.3",
-  "repository" : "git://github.com/axelhzf/subtitles-mixer.git",
-  "keywords" : [
+  "version": "0.0.4",
+  "repository": "git://github.com/axelhzf/subtitles-mixer.git",
+  "keywords": [
     "subtitles",
     "srt",
     "ass"
@@ -10,7 +10,9 @@
   "dependencies": {
     "underscore": "~1.6.0",
     "underscore.string": "~2.3.3",
-    "commander": "~2.1.0"
+    "commander": "~2.1.0",
+    "jschardet": "~1.1.0",
+    "iconv-lite": "~0.2.11"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
@@ -18,6 +20,7 @@
   },
   "license": "MIT",
   "preferGlobal": true,
+  "main" : "src/mixer.js",
   "bin": {
     "subtitles-mixer": "bin/subtitles-mixer"
   }

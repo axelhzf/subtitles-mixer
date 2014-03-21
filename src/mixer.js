@@ -2,6 +2,8 @@ var srt = require("./srt");
 var ass = require("./ass");
 var fs = require("fs");
 var _ = require("underscore");
+var jschardet = require("jschardet");
+var iconv = require('iconv-lite');
 
 module.exports = function mixer (topPath, bottomPath, outPath, cb) {
   readSrt(topPath, function (err, topData) {
@@ -25,14 +27,34 @@ module.exports = function mixer (topPath, bottomPath, outPath, cb) {
 
     });
   });
-
 };
+
+function bufferToString (buffer) {
+  var str = "";
+  for (var i = 0; i < buffer.length; ++i)
+    str += String.fromCharCode(buffer[i])
+  return str;
+}
+
+function detectEncoding(content) {
+  var str = bufferToString(content);
+  str = str.replace(/[A-Za-z0-9 :\-\->,\n]+/g, "");
+  var detect = jschardet.detect(str);
+  return detect.encoding;
+}
 
 function readSrt(path, cb) {
   fs.readFile(path, function (err, content) {
     if (err) return cb(err);
 
-    var srtData = srt.parse(content.toString());
+    var encoding = detectEncoding(content);
+    var strContent;
+    if (encoding !="utf-8" && encoding!="ascii") {
+      strContent = iconv.fromEncoding(content, encoding);
+    } else {
+      strContent = content.toString();
+    }
+    var srtData = srt.parse(strContent);
     cb(null, srtData);
   });
 }
