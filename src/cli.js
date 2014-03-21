@@ -1,14 +1,6 @@
-var fs = require("fs");
 var _ = require("underscore");
 var program = require("commander");
-var srt = require("./../src/srt");
-var ass = require("./../src/ass");
-
-function setAll (arr, property, value) {
-  _.each(arr, function (item) {
-    item[property] = value;
-  });
-}
+var mixer = require("./mixer");
 
 function validateParameters(object, params) {
   _.each(params, function (param) {
@@ -29,15 +21,4 @@ program
 
 validateParameters(program, ["top", "bottom", "out"]);
 
-var topContent = fs.readFileSync(program.top).toString();
-var bottomContent = fs.readFileSync(program.bottom).toString();
-
-var topData = srt.parse(topContent);
-var bottomData = srt.parse(bottomContent);
-
-setAll(topData, "style", "Top");
-setAll(bottomData, "style", "Bot");
-
-var out = fs.createWriteStream(program.out);
-ass.writeAss(srt.merge(topData, bottomData), out);
-out.end();
+mixer(program.top, program.bottom, program.out);
