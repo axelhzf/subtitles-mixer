@@ -75,6 +75,8 @@ function readSrt(options, cb) {
 
 function setAll (arr, property, value) {
   _.each(arr, function (item) {
-    item[property] = value;
+    if (item) {
+      item[property] = value;
+    }
   });
 }
