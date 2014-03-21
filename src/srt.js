@@ -59,6 +59,7 @@ function parse(srt) {
 
 function merge(topData, bottomData) {
   var mergedData = topData.concat(bottomData);
+  mergedData = _.compact(mergedData);
   var mergedDataSorted = _.sortBy(mergedData, function (data) {
     return data.startTime;
   });
